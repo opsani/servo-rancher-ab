@@ -7,7 +7,7 @@ RUN pip3 install signalfx requests PyYAML && \
     apt-get update && apt-get install -y apache2-utils
 
 # Get the Rancher configuration file
-COPY ./app.yml .
+COPY ./config.yml /servo/rancher
 
 # Install servo
 ADD https://raw.githubusercontent.com/opsani/servo-rancher/master/adjust \
