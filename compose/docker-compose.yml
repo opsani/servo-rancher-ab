@@ -1,0 +1,39 @@
+version: '2'
+services:
+  servo:
+    image: kumulustech/servo-rancher-ab:latest
+    environment:
+      OPTUNE_ACCOUNT: kumulus
+      OPTUNE_API_URL: http://rancher.kumulus.co:8080
+      OPTUNE_PROJECT: Default
+      OPTUNE_STACK: http-test
+    stdin_open: true
+    tty: true
+    secrets:
+    - mode: '0444'
+      uid: '0'
+      gid: '0'
+      source: optune_auth_token
+      target: optune_auth_token
+    - mode: '0444'
+      uid: '0'
+      gid: '0'
+      source: optune_api_key
+      target: optune_api_key
+    - mode: '0444'
+      uid: '0'
+      gid: '0'
+      source: optune_api_secret
+      target: optune_api_secret
+    command:
+    - --auth-token /var/secrets/optune_auth_token
+    - http-test
+    labels:
+      io.rancher.container.pull_image: always
+secrets:
+  optune_auth_token:
+    external: 'true'
+  optune_api_secret:
+    external: 'true'
+  optune_api_key:
+    external: 'true'
